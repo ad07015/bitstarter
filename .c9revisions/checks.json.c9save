@@ -1,0 +1,4 @@
+{"ts":1373490843767,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1373490847156,"patch":[[{"diffs":[[1,"[\"h1\",\r\n \".navigation\"]"]],"start1":0,"start2":0,"length1":0,"length2":23}]],"length":23,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1373491711443,"patch":[[{"diffs":[[1," "],[0,"[\"h1\",\r\n"],[-1," "],[0,"\".na"]],"start1":0,"start2":0,"length1":13,"length2":13},{"diffs":[[0,"igation\""],[1,",\r\n\".logo\",\r\n\".blank\",\r\n\".about\",\r\n\".heading\",\r\n\".subheading\",\r\n\".pitch\",\r\n\".video\",\r\n\".thermometer\",\r\n\".order\",\r\n\".social\",\r\n\".section1\",\r\n\".section2\",\r\n\".faq\",\r\n\".footer\""],[0,"]"]],"start1":14,"start2":14,"length1":9,"length2":181}]],"length":195,"saved":false}
+{"ts":1373491712484,"patch":[[{"diffs":[[-1," "],[0,"[\"h1"]],"start1":0,"start2":0,"length1":5,"length2":4}]],"length":194,"saved":false}
