@@ -22,12 +22,13 @@ References:
 */
 
 var fs = require('fs');
-var restler = require('restler');
+var rest = require('restler');
+var util = require('util');
 var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
-var FILEURL_DEFAULT = "https://github.com/ad07015/bitstarter/blob/1f2b509b5ba2b6c136e96e28add90f013a3c943e/index.html"
+var FILE_URL_NAME = "result.txt"
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -63,15 +64,44 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
-if(require.main == module) {
+var checkJsonAfterGetUrl = function(filename) {
+    // assertFileExists(filename.toString());
+    var checkJson = checkHtmlFile(filename, program.checks);
+    var outJson = JSON.stringify(checkJson, null, 4);
+    console.log(outJson);
+}
+
+var getUrl = function(url) {
+    rest.get(url).on('complete', function(result) {
+        if (result instanceof Error) {
+            console.log("result is instanceof error");
+            util.puts('Error: ' + result.message);
+        }
+        else {
+            console.log("Writing content to file " + FILE_URL_NAME);
+            program.file = 'result.txt';
+            fs.writeFileSync(program.file, result.toString());
+            checkJsonAfterGetUrl(FILE_URL_NAME.toString());
+        }
+    })
+};
+
+
+if (require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .option('-u, --url <file_url>', 'Permalink to index.html', clone(assertFileExists), FILEURL_DEFAULT)
+        .option('-u, --url <file_url>', 'Permalink to index.html')
         .parse(process.argv);
-    var checkJson = checkHtmlFile(program.file, program.checks);
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
+    if (program.url) {
+        console.log("Url is NOT null: " + program.url);
+        getUrl(program.url);
+    } else {
+        console.log("Url IS null");
+        var checkJson = checkHtmlFile(program.file, program.checks);
+        var outJson = JSON.stringify(checkJson, null, 4);
+        console.log(outJson);
+    }
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
